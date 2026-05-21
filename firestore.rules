@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Reusable validation helpers
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidLead(data) {
+      return data.keys().hasAll(['timestamp', 'email', 'monthlyIncome', 'rent', 'bills', 'foodLifestyle', 'debtPayments', 'subscriptions', 'otherSpending', 'netSurplus'])
+        && data.keys().size() == 10
+        && data.timestamp is string && data.timestamp.size() <= 100
+        && data.email is string && data.email.size() <= 128 && data.email.matches('^[^@]+@[^@]+\\.[^@]+$')
+        && data.monthlyIncome is string && data.monthlyIncome.size() <= 20
+        && data.rent is string && data.rent.size() <= 20
+        && data.bills is string && data.bills.size() <= 20
+        && data.foodLifestyle is string && data.foodLifestyle.size() <= 20
+        && data.debtPayments is string && data.debtPayments.size() <= 20
+        && data.subscriptions is string && data.subscriptions.size() <= 20
+        && data.otherSpending is string && data.otherSpending.size() <= 20
+        && data.netSurplus is string && data.netSurplus.size() <= 25;
+    }
+
+    // Leads collection
+    match /leads/{leadId} {
+      allow get: if false;
+      allow list: if false;
+      allow update: if false;
+      allow delete: if false;
+      allow create: if isValidId(leadId) && isValidLead(request.resource.data);
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Wealthynx",
+  "description": "An AI-style personal finance budget planner with CPA content locker integration",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

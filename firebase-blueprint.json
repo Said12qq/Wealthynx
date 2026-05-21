@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "Lead": {
+      "title": "Lead",
+      "description": "Visitor budget input and email leads submissions",
+      "type": "object",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "email": {
+          "type": "string"
+        },
+        "monthlyIncome": {
+          "type": "string"
+        },
+        "rent": {
+          "type": "string"
+        },
+        "bills": {
+          "type": "string"
+        },
+        "foodLifestyle": {
+          "type": "string"
+        },
+        "debtPayments": {
+          "type": "string"
+        },
+        "subscriptions": {
+          "type": "string"
+        },
+        "otherSpending": {
+          "type": "string"
+        },
+        "netSurplus": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "timestamp",
+        "email"
+      ]
+    }
+  },
+  "firestore": {
+    "leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Database collection for storing client email addresses and financial profiles"
+    }
+  }
+}
